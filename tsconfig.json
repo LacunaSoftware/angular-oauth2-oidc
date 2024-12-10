@@ -6,9 +6,11 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "allowJs": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "downlevelIteration": true,
+    "module": "esnext",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -20,12 +22,18 @@
       "sample": [
         "dist/sample"
       ],
-      
-      // "angular-oauth2-oidc": [
-      //   "projects/lib/src/public_api"
-      //   //"dist/lib"
-      // ]
-      
-    }
+      "lacuna-oauth2-oidc": [
+        "projects/lib/src/public_api"
+      ],
+      "lacuna-oauth2-oidc-jwks": [
+        "projects/angular-oauth2-oidc-jwks/src/public-api"
+      ]
+    },
+    "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "enableIvy": true,
+    "compilationMode": "full"
+
   }
 }

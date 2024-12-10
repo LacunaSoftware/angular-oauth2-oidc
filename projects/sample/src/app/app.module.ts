@@ -1,50 +1,56 @@
-import { authConfig } from './auth.config';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import {
-  AuthConfig,
-  JwksValidationHandler,
   OAuthModule,
-  ValidationHandler
-} from 'angular-oauth2-oidc';
+  OAuthStorage,
+  DateTimeProvider,
+} from 'lacuna-oauth2-oidc';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { AppRouterModule } from './app.routes';
+import { APP_ROUTES } from './app.routes';
 import { BASE_URL } from './app.tokens';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { HomeComponent } from './home/home.component';
 import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
+// import { CustomDateTimeProvider } from './shared/date/custom-date-time-provider';
 import { SharedModule } from './shared/shared.module';
+import { RouterModule, ExtraOptions } from '@angular/router';
+import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { useHash } from '../flags';
 
 @NgModule({
   imports: [
     BrowserModule,
+    RouterModule.forRoot(APP_ROUTES, { useHash }),
     FormsModule,
     ReactiveFormsModule,
-    SharedModule.forRoot(),
-    AppRouterModule,
     HttpClientModule,
+    SharedModule.forRoot(),
     OAuthModule.forRoot({
       resourceServer: {
         allowedUrls: ['http://www.angular.at/api'],
-        sendAccessToken: true
-      }
-    })
+        sendAccessToken: true,
+      },
+    }),
   ],
   declarations: [
     AppComponent,
     HomeComponent,
     FlightHistoryComponent,
-    PasswordFlowLoginComponent
+    PasswordFlowLoginComponent,
   ],
   providers: [
+    // (useHash) ? { provide: LocationStrategy, useClass: HashLocationStrategy } : [],
     // {provide: AuthConfig, useValue: authConfig },
-    // { provide: OAuthStorage, useClass: DemoStorage },
+    // { provide: OAuthStorage, useValue: localStorage },
     // { provide: ValidationHandler, useClass: JwksValidationHandler },
-    { provide: BASE_URL, useValue: 'http://www.angular.at' }
+    // Enabled the custom date time provider will make the sample fail to login, since the demo Idp time is correctly synced to the world time.
+    // { provide: DateTimeProvider, useClass: CustomDateTimeProvider },
+    { provide: BASE_URL, useValue: 'http://www.angular.at' },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

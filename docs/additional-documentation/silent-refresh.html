@@ -1,0 +1,254 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-oauth2-oidc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Refreshing when using Implicit Flow (Implicit Flow and Code Flow)</h2>
+<p><strong>Notes for Code Flow</strong>: You can also use this strategy for refreshing tokens when using code flow. However, please note, the strategy described within <a href="./token-refresh.html">Token Refresh</a> is far easier in this case.</p>
+<p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
+<p>To use this approach, setup a redirect uri for the silent refresh.</p>
+<p>For this, you can set the property silentRefreshRedirectUri in the config object:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">// This api will come in the next version
+
+import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
+
+export const authConfig: AuthConfig = {
+
+  // Url of the Identity Provider
+  issuer: &#39;https://steyer-identity-server.azurewebsites.net/identity&#39;,
+
+  // URL of the SPA to redirect the user to after login
+  redirectUri: window.location.origin + &#39;/index.html&#39;,
+
+  // URL of the SPA to redirect the user after silent refresh
+  silentRefreshRedirectUri: window.location.origin + &#39;/silent-refresh.html&#39;,
+
+  // defaults to true for implicit flow and false for code flow
+  // as for code code the default is using a refresh_token
+  // Also see docs section &#39;Token Refresh&#39;
+  useSilentRefresh: true,
+
+  // The SPA&#39;s id. The SPA is registerd with this id at the auth-server
+  clientId: &#39;spa-demo&#39;,
+
+  // set the scope for the permissions the client should request
+  // The first three are defined by OIDC. The 4th is a usecase-specific one
+  scope: &#39;openid profile email voucher&#39;,
+}</code></pre></div><p>As an alternative, you can set the same property directly with the OAuthService:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.silentRefreshRedirectUri = window.location.origin + &quot;/silent-refresh.html&quot;;</code></pre></div><p>Please keep in mind that this uri has to be configured at the auth-server too.</p>
+<p>This file is loaded into the hidden iframe after getting new tokens. Its only task is to send the received tokens to the main application:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-HTML">&lt;html&gt;
+&lt;body&gt;
+    &lt;script&gt;
+        (window.opener || window.parent).postMessage(location.hash || (&#39;#&#39; + location.search), location.origin);
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div><p>This simple implementation within silent-refresh.html is sufficient in most cases. It takes care of the hash fragment as well as of the query string (property search). For <strong>edge cases</strong> you need to check if the received hash fragment is a token response. For this, please go with the following <strong>more advanced implementation</strong>:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;html&gt;
+    &lt;body&gt;
+        &lt;script&gt;
+            var checks = [/[\?|&amp;|#]code=/, /[\?|&amp;|#]error=/, /[\?|&amp;|#]token=/, /[\?|&amp;|#]id_token=/];
+
+            function isResponse(str) {
+                if (!str) return false;
+                for(var i=0; i&lt;checks.length; i++) {
+                    if (str.match(checks[i])) return true;
+                }
+                return false;
+            }
+
+            var message = isResponse(location.hash) ? location.hash : &#39;#&#39; + location.search;
+
+            if (window.parent &amp;&amp; window.parent !== window) {
+                // if loaded as an iframe during silent refresh
+                window.parent.postMessage(message, location.origin);
+            } else if (window.opener &amp;&amp; window.opener !== window) {
+                // if loaded as a popup during initial login
+                window.opener.postMessage(message, location.origin);
+            } else {
+                // last resort for a popup which has been through redirects and can&#39;t use window.opener
+                localStorage.setItem(&#39;auth_hash&#39;, message);
+                localStorage.removeItem(&#39;auth_hash&#39;);
+            }
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre></div><p>The above example checks if the message in the URL (either hash or query string) is indeed a message returned with a response from an authentication provider and not an arbitrary value and then attempts to forward this message to a parent widow either by <code>.parent</code> (when this html is loaded in an iframe as a result of silent refresh) or by <code>.opener</code> (when the html is loaded into a popup during initial login) or finally using a storage event (as a fallback for complex cases, e.g. initial login in a popup with a cross-domain auth provider).</p>
+<p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-JSON">&quot;assets&quot;: [
+    [...],
+    &quot;silent-refresh.html&quot;
+],</code></pre></div><p>To perform a silent refresh, just call the following method:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this
+    .oauthService
+    .silentRefresh()
+    .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
+    .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre></div><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>silentRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
+<h3>Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
+<p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'silent-refresh.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

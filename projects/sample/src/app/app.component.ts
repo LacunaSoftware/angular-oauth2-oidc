@@ -1,61 +1,86 @@
 import { noDiscoveryAuthConfig } from './auth-no-discovery.config';
-import { googleAuthConfig } from './auth.google.config';
 import { authConfig } from './auth.config';
-import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { Component } from '@angular/core';
-import { OAuthService, AuthConfig, NullValidationHandler, JwksValidationHandler } from 'angular-oauth2-oidc';
-// import { JwksValidationHandler } from 'angular-oauth2-oidc';
+import { OAuthService, NullValidationHandler } from 'lacuna-oauth2-oidc';
 import { Router } from '@angular/router';
-import { filter, delay } from 'rxjs/operators';
-import { of, race } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { authCodeFlowConfig } from './auth-code-flow.config';
+import { JwksValidationHandler } from 'lacuna-oauth2-oidc-jwks';
+import { useHash } from '../flags';
 
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'flight-app',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
-    // this.configureWithoutDiscovery();
-    this.configureWithNewConfigApi();
-    // this.configureAuth();
-    // this.configurePasswordFlow();
+    // Remember the selected configuration
+    if (sessionStorage.getItem('flow') === 'code') {
+      this.configureCodeFlow();
+    } else {
+      this.configureImplicitFlow();
+    }
+
+    // Automatically load user profile
+    this.oauthService.events
+      .pipe(filter((e) => e.type === 'token_received'))
+      .subscribe((_) => {
+        console.debug('state', this.oauthService.state);
+        this.oauthService.loadUserProfile();
+
+        const scopes = this.oauthService.getGrantedScopes();
+        console.debug('scopes', scopes);
+      });
   }
 
-  private configureWithoutDiscovery() {
-    this.oauthService.configure(noDiscoveryAuthConfig);
-    this.oauthService.tokenValidationHandler = new NullValidationHandler();
-    this.oauthService.tryLogin();
-  }
-
-  // This api will come in the next version
-  private configureWithNewConfigApi() {
-    this.oauthService.configure(authConfig);
-    this.oauthService.setStorage(localStorage);
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
-
+  private configureCodeFlow() {
+    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then((_) => {
+      if (useHash) {
+        this.router.navigate(['/']);
+      }
+    });
 
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
+  }
 
-    this.oauthService.events.subscribe(e => {
+  private configureImplicitFlow() {
+    this.oauthService.configure(authConfig);
+    // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then((_) => {
+      if (useHash) {
+        this.router.navigate(['/']);
+      }
+    });
+
+    // Optional
+    // this.oauthService.setupAutomaticSilentRefresh();
+
+    // Display all events
+    this.oauthService.events.subscribe((e) => {
       // tslint:disable-next-line:no-console
       console.debug('oauth/oidc event', e);
     });
 
     this.oauthService.events
-      .pipe(filter(e => e.type === 'session_terminated'))
-      .subscribe(e => {
+      .pipe(filter((e) => e.type === 'session_terminated'))
+      .subscribe((e) => {
         // tslint:disable-next-line:no-console
         console.debug('Your session has been terminated!');
       });
+  }
 
-    this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(e => {
-        // this.oauthService.loadUserProfile();
-      });
+  //
+  // Below you find further examples for configuration functions
+  //
+
+  private configureWithoutDiscovery() {
+    this.oauthService.configure(noDiscoveryAuthConfig);
+    this.oauthService.tokenValidationHandler = new NullValidationHandler();
+    this.oauthService.tryLogin();
   }
 
   private configureAuth() {
@@ -83,19 +108,19 @@ export class AppComponent {
 
     this.oauthService.tokenValidationHandler = new NullValidationHandler();
 
-    this.oauthService.events.subscribe(e => {
+    this.oauthService.events.subscribe((e) => {
       // tslint:disable-next-line:no-console
       console.debug('oauth/oidc event', e);
     });
 
     // Load Discovery Document and then try to login the user
-    this.oauthService.loadDiscoveryDocument().then(doc => {
+    this.oauthService.loadDiscoveryDocument().then((doc) => {
       this.oauthService.tryLogin();
     });
 
     this.oauthService.events
-      .pipe(filter(e => e.type === 'token_expires'))
-      .subscribe(e => {
+      .pipe(filter((e) => e.type === 'token_expires'))
+      .subscribe((e) => {
         // tslint:disable-next-line:no-console
         console.debug('received token_expires event', e);
         this.oauthService.silentRefresh();

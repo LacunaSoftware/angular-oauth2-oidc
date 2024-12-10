@@ -8,8 +8,16 @@
         "file": "preserving-state.md"
     },
     {
-        "title": "Refreshing a Token (Silent Refresh)",
+        "title": "Refreshing a Token",
+        "file": "token-refresh.md"
+    },
+    {
+        "title": "Silent Refresh",
         "file": "silent-refresh.md"
+    },
+    {
+        "title": "Token Refresh",
+        "file": "token-refresh.md"
     },
     {
         "title": "Working with HttpInterceptors",
@@ -18,6 +26,10 @@
     {
         "title": "Callback after login",
         "file": "callback-after-login.md"
+    },
+    {
+        "title": "Popup-based Login",
+        "file": "popup.md"
     },
     {
         "title": "Custom Query Parameters",
@@ -48,15 +60,54 @@
         "file": "implicit-flow-config-no-discovery.md"
     },
     {
+        "title": "Using an ID Provider that Fails Discovery Document Validation",
+        "file": "discovery-document-validation.md"
+    },
+    {
         "title": "Using SystemJS",
         "file": "systemjs.md"
+    },
+    {
+        "title": "Using Implicit Flow",
+        "file": "implicit-flow.md"
+    },
+    {
+        "title": "Using Password Flow",
+        "file": "password-flow.md"
+    },
+    {
+        "title": "Configure custom OAuthStorage",
+        "file": "configure-custom-oauthstorage.md"
+    },
+    {
+        "title": "Manually Skipping Login Form",
+        "file": "skipping-login-form.md"
     },
     {
         "title": "Original Config API",
         "file": "implicit-flow-config-discovery.md"
     },
     {
-        "title": "Using Password Flow",
-        "file": "password-flow.md"
+        "title": "Authorization Servers",
+        "file": "authsvr.md",
+        "children": [
+            {
+                "title": "Using Identity Server",
+                "file": "authsvr-idsvr.md"
+            },
+            {
+                "title": "Using Keycloak",
+                "file": "authsvr-keycloak.md"
+            },
+            {
+                "title": "Auth0",
+                "file": "authsvr-auth0.md"
+            },
+            {
+                "title": "Azure AD (Active Directory)",
+                "file": "authsvr-azure-ad.md"
+            }            
+        ]
     }
+
 ]

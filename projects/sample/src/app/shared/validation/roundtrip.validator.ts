@@ -1,19 +1,19 @@
 import { Directive } from '@angular/core';
 import {
-  FormGroup,
+  UntypedFormGroup,
   Validator,
   AbstractControl,
   NG_VALIDATORS,
-  FormGroupDirective
+  FormGroupDirective,
 } from '@angular/forms';
 
 @Directive({
   selector: 'form[round-trip]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: RoundTrip, multi: true }]
+  providers: [{ provide: NG_VALIDATORS, useExisting: RoundTrip, multi: true }],
 })
 export class RoundTrip implements Validator {
   validate(control: AbstractControl): any {
-    let formGroup = <FormGroup>control;
+    let formGroup = <UntypedFormGroup>control;
     let fromCtrl = formGroup.controls['from'];
     let toCtrl = formGroup.controls['to'];
 
@@ -25,8 +25,8 @@ export class RoundTrip implements Validator {
     if (from == to) {
       return {
         'round-trip': {
-          city: from
-        }
+          city: from,
+        },
       };
     }
     return {};

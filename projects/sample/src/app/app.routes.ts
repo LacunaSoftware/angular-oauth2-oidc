@@ -1,40 +1,36 @@
 import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
-import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
 
-let APP_ROUTES: Routes = [
+export let APP_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'password-flow-login',
-    component: PasswordFlowLoginComponent
+    component: PasswordFlowLoginComponent,
   },
   {
     path: 'flight-booking',
-    loadChildren: './flight-booking/flight-booking.module#FlightBookingModule'
+    loadChildren: () =>
+      import('./flight-booking/flight-booking.module').then(
+        (mod) => mod.FlightBookingModule
+      ),
   },
   {
     path: 'history',
     component: FlightHistoryComponent,
-    outlet: 'aux'
+    outlet: 'aux',
   },
   {
     path: '**',
-    redirectTo: 'home'
-  }
+    redirectTo: 'home',
+  },
 ];
-
-export let AppRouterModule = RouterModule.forRoot(APP_ROUTES, {
-  preloadingStrategy: CustomPreloadingStrategy
-  // useHash: true,
-  // initialNavigation: false
-});

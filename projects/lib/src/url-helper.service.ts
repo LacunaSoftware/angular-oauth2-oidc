@@ -24,20 +24,13 @@ export class UrlHelperService {
 
   public parseQueryString(queryString: string): object {
     const data = {};
-    let
-      pairs,
-      pair,
-      separatorIndex,
-      escapedKey,
-      escapedValue,
-      key,
-      value;
+    let pair, separatorIndex, escapedKey, escapedValue, key, value;
 
     if (queryString === null) {
       return data;
     }
 
-    pairs = queryString.split('&');
+    const pairs = queryString.split('&');
 
     for (let i = 0; i < pairs.length; i++) {
       pair = pairs[i];
@@ -54,7 +47,9 @@ export class UrlHelperService {
       key = decodeURIComponent(escapedKey);
       value = decodeURIComponent(escapedValue);
 
-      if (key.substr(0, 1) === '/') { key = key.substr(1); }
+      if (key.substr(0, 1) === '/') {
+        key = key.substr(1);
+      }
 
       data[key] = value;
     }

@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Flight } from '../../entities/flight';
 import { FlightService } from '../services/flight.service';
 import {
-  FormGroup,
-  FormBuilder,
+  UntypedFormGroup,
+  UntypedFormBuilder,
   Validators,
-  AbstractControl
+  AbstractControl,
 } from '@angular/forms';
 import { CityValidatorDirective } from '../../shared/validation/city.validator';
 
@@ -13,25 +13,28 @@ import { CityValidatorDirective } from '../../shared/validation/city.validator';
   selector: 'flight-search-reactive',
   templateUrl: 'flight-search-reactive.component.html',
   providers: [FlightService],
-  styleUrls: ['flight-search-reactive.component.css']
+  styleUrls: ['flight-search-reactive.component.css'],
 })
 export class FlightSearchReactiveComponent {
   public flights: Array<Flight> = [];
   public selectedFlight: Flight;
 
-  public filter: FormGroup;
+  public filter: UntypedFormGroup;
 
   public formDesc = [];
 
-  constructor(private flightService: FlightService, private fb: FormBuilder) {
+  constructor(
+    private flightService: FlightService,
+    private fb: UntypedFormBuilder
+  ) {
     this.formDesc.push({
       label: 'Von',
-      name: 'from'
+      name: 'from',
     });
 
     this.formDesc.push({
       label: 'Nach',
-      name: 'to'
+      name: 'to',
     });
 
     this.filter = fb.group({
@@ -43,21 +46,21 @@ export class FlightSearchReactiveComponent {
           (c: AbstractControl): any => {
             if (c.value != 'Graz' && c.value != 'Hamburg') {
               return {
-                city: true
+                city: true,
               };
             }
             return {};
-          }
-        ]
+          },
+        ],
       ],
-      to: ['Hamburg']
+      to: ['Hamburg'],
     });
 
-    this.filter.valueChanges.subscribe(e => {
+    this.filter.valueChanges.subscribe((e) => {
       console.debug('formular geändert', e);
     });
 
-    this.filter.controls['from'].valueChanges.subscribe(e => {
+    this.filter.controls['from'].valueChanges.subscribe((e) => {
       console.debug('from geändert', e);
     });
   }

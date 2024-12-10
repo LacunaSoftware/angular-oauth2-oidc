@@ -8,591 +8,82 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
-            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-            <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <nav>
-
-    <ul class="list">
-
-        <li class="title">
-            <a href="index.html" data-type="index-link">angular-oauth2-oidc</a>
-        </li>
-
-        <li class="divider"></li>
-
-
-        <li class="chapter">
-            <a data-type="chapter-link" href="index.html"><span class="fa fa-home"></span>Getting started</a>
-            <ul class="links">
-                    <li class="link">
-                        <a 
-                            
-                             href="overview.html" 
-                             href="overview.html" 
-                            data-type="chapter-link">
-                            <span class="fa fa-fw fa-th"></span>Overview
-                        </a>
-                    </li>
-                    <li class="link">
-                      <a href="index.html" data-type="chapter-link"><span class="fa fa-file-text-o"></span>README</a>
-                    </li>
-                    <li class="link">
-                            <a href="changelog.html"
-                        data-type="chapter-link">
-                            <span class="fa fa-fw fa-file-text-o"></span>CHANGELOG
-                        </a>
-                    </li>
-                    <li class="link">
-                        <a href="dependencies.html"
-                            data-type="chapter-link">
-                            <span class="fa fa-fw fa-list"></span>Dependencies
-                        </a>
-                    </li>
-            </ul>
-        </li>
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#xs-additional-pages"
-                >
-                <span class="fa fa-fw fa-book"></span>
-                <span>Additional documentation</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="xs-additional-pages"
-                >
-                    <li class="link ">
-                        <a href="additional-documentation/getting-started.html" data-type="entity-link" data-context-id="additional">Getting Started</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/preserving-state-(like-the-requested-url).html" data-type="entity-link" data-context-id="additional">Preserving State (like the Requested URL)</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/refreshing-a-token-(silent-refresh).html" data-type="entity-link" data-context-id="additional">Refreshing a Token (Silent Refresh)</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/working-with-httpinterceptors.html" data-type="entity-link" data-context-id="additional">Working with HttpInterceptors</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/callback-after-login.html" data-type="entity-link" data-context-id="additional">Callback after login</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/custom-query-parameters.html" data-type="entity-link" data-context-id="additional">Custom Query Parameters</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/events.html" data-type="entity-link" data-context-id="additional">Events</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/routing-with-the-hashstrategy.html" data-type="entity-link" data-context-id="additional">Routing with the HashStrategy</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/adapt-id_token-validation.html" data-type="entity-link" data-context-id="additional">Adapt id_token Validation</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/session-checks.html" data-type="entity-link" data-context-id="additional">Session Checks</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/server-side-rendering.html" data-type="entity-link" data-context-id="additional">Server Side Rendering</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" data-type="entity-link" data-context-id="additional">Configure Library for Implicit Flow without discovery document</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/using-systemjs.html" data-type="entity-link" data-context-id="additional">Using SystemJS</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/original-config-api.html" data-type="entity-link" data-context-id="additional">Original Config API</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/using-password-flow.html" data-type="entity-link" data-context-id="additional">Using Password Flow</a>
-                    </li>
-            </ul>
-        </li>
-
-        <li class="chapter modules">
-            <a data-type="chapter-link" href="modules.html">
-                <div class="menu-toggler linked" data-toggle="collapse"
-                        data-target="#xs-modules-links"
-                >
-                    <span class="fa fa-fw fa-archive"></span>
-                    <span class="link-name">Modules</span>
-                    <span class="fa fa-angle-down"></span>
-                </div>
-            </a>
-            <ul class="links collapse"
-                    id="xs-modules-links"
-                >
-                    <li class="link">
-                        <a href="modules/OAuthModule.html" data-type="entity-link">OAuthModule</a>
-                    </li>
-            </ul>
-        </li>
-
-
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#xs-classes-links"
-                >
-                <span class="fa fa-fw fa-file-code-o"></span>
-                <span>Classes</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="xs-classes-links"
-                >
-                    <li class="link">
-                        <a href="classes/AbstractValidationHandler.html" data-type="entity-link">AbstractValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/AuthConfig.html" data-type="entity-link">AuthConfig</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/JwksValidationHandler.html" data-type="entity-link">JwksValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/LoginOptions.html" data-type="entity-link">LoginOptions</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/NullValidationHandler.html" data-type="entity-link">NullValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthErrorEvent.html" data-type="entity-link">OAuthErrorEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthEvent.html" data-type="entity-link">OAuthEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthInfoEvent.html" data-type="entity-link">OAuthInfoEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthModuleConfig.html" data-type="entity-link">OAuthModuleConfig</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthNoopResourceServerErrorHandler.html" data-type="entity-link">OAuthNoopResourceServerErrorHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthResourceServerConfig.html" data-type="entity-link">OAuthResourceServerConfig</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthResourceServerErrorHandler.html" data-type="entity-link">OAuthResourceServerErrorHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthStorage.html" data-type="entity-link">OAuthStorage</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthSuccessEvent.html" data-type="entity-link">OAuthSuccessEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/ReceivedTokens.html" data-type="entity-link">ReceivedTokens</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/ValidationHandler.html" data-type="entity-link">ValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/WebHttpUrlEncodingCodec.html" data-type="entity-link">WebHttpUrlEncodingCodec</a>
-                    </li>
-            </ul>
-        </li>
-
-                <li class="chapter">
-                    <div class="simple menu-toggler" data-toggle="collapse"
-                            data-target="#xs-injectables-links"
-                        >
-                        <span class="fa fa-fw fa-long-arrow-down"></span>
-                        <span>Injectables</span>
-                        <span class="fa fa-angle-down"></span>
-                    </div>
-                    <ul class="links collapse"
-                            id="xs-injectables-links"
-                        >
-                            <li class="link">
-                                <a href="injectables/OAuthService.html" data-type="entity-link">OAuthService</a>
-                            </li>
-                            <li class="link">
-                                <a href="injectables/UrlHelperService.html" data-type="entity-link">UrlHelperService</a>
-                            </li>
-                    </ul>
-                </li>
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#xs-interceptors-links"
-                >
-                <span class="fa fa-fw fa-exchange"></span>
-                <span>Interceptors</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="xs-interceptors-links"
-                >
-                    <li class="link">
-                        <a href="interceptors/DefaultOAuthInterceptor.html" data-type="entity-link">DefaultOAuthInterceptor</a>
-                    </li>
-            </ul>
-        </li>
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#xs-interfaces-links"
-                >
-                <span class="fa fa-fw fa-info"></span>
-                <span>Interfaces</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="xs-interfaces-links"
-                >
-                    <li class="link">
-                        <a href="interfaces/OidcDiscoveryDoc.html" data-type="entity-link">OidcDiscoveryDoc</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/ParsedIdToken.html" data-type="entity-link">ParsedIdToken</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/TokenResponse.html" data-type="entity-link">TokenResponse</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/UserInfo.html" data-type="entity-link">UserInfo</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/ValidationParams.html" data-type="entity-link">ValidationParams</a>
-                    </li>
-            </ul>
-        </li>
-
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#xs-miscellaneous-links"
-                >
-                <span class="fa fa-fw fa-cubes"></span>
-                <span>Miscellaneous</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="xs-miscellaneous-links"
-                >
-                    <li class="link">
-                      <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
-                    </li>
-                    <li class="link">
-                      <a href="miscellaneous/typealiases.html" data-type="entity-link">Type aliases</a>
-                    </li>
-                    <li class="link">
-                      <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
-                    </li>
-            </ul>
-        </li>
-
-
-
-
-    </ul>
-
-</nav>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
                <div class="hidden-xs menu">
-                   <nav>
-
-    <ul class="list">
-
-        <li class="title">
-            <a href="index.html" data-type="index-link">angular-oauth2-oidc</a>
-        </li>
-
-        <li class="divider"></li>
-
-            <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-
-        <li class="chapter">
-            <a data-type="chapter-link" href="index.html"><span class="fa fa-home"></span>Getting started</a>
-            <ul class="links">
-                    <li class="link">
-                        <a 
-                            
-                             href="overview.html" 
-                             href="overview.html" 
-                            data-type="chapter-link">
-                            <span class="fa fa-fw fa-th"></span>Overview
-                        </a>
-                    </li>
-                    <li class="link">
-                      <a href="index.html" data-type="chapter-link"><span class="fa fa-file-text-o"></span>README</a>
-                    </li>
-                    <li class="link">
-                            <a href="changelog.html"
-                        data-type="chapter-link">
-                            <span class="fa fa-fw fa-file-text-o"></span>CHANGELOG
-                        </a>
-                    </li>
-                    <li class="link">
-                        <a href="dependencies.html"
-                            data-type="chapter-link">
-                            <span class="fa fa-fw fa-list"></span>Dependencies
-                        </a>
-                    </li>
-            </ul>
-        </li>
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#additional-pages"
->
-                <span class="fa fa-fw fa-book"></span>
-                <span>Additional documentation</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="additional-pages"
->
-                    <li class="link ">
-                        <a href="additional-documentation/getting-started.html" data-type="entity-link" data-context-id="additional">Getting Started</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/preserving-state-(like-the-requested-url).html" data-type="entity-link" data-context-id="additional">Preserving State (like the Requested URL)</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/refreshing-a-token-(silent-refresh).html" data-type="entity-link" data-context-id="additional">Refreshing a Token (Silent Refresh)</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/working-with-httpinterceptors.html" data-type="entity-link" data-context-id="additional">Working with HttpInterceptors</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/callback-after-login.html" data-type="entity-link" data-context-id="additional">Callback after login</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/custom-query-parameters.html" data-type="entity-link" data-context-id="additional">Custom Query Parameters</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/events.html" data-type="entity-link" data-context-id="additional">Events</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/routing-with-the-hashstrategy.html" data-type="entity-link" data-context-id="additional">Routing with the HashStrategy</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/adapt-id_token-validation.html" data-type="entity-link" data-context-id="additional">Adapt id_token Validation</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/session-checks.html" data-type="entity-link" data-context-id="additional">Session Checks</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/server-side-rendering.html" data-type="entity-link" data-context-id="additional">Server Side Rendering</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" data-type="entity-link" data-context-id="additional">Configure Library for Implicit Flow without discovery document</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/using-systemjs.html" data-type="entity-link" data-context-id="additional">Using SystemJS</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/original-config-api.html" data-type="entity-link" data-context-id="additional">Original Config API</a>
-                    </li>
-                    <li class="link ">
-                        <a href="additional-documentation/using-password-flow.html" data-type="entity-link" data-context-id="additional">Using Password Flow</a>
-                    </li>
-            </ul>
-        </li>
-
-        <li class="chapter modules">
-            <a data-type="chapter-link" href="modules.html">
-                <div class="menu-toggler linked" data-toggle="collapse"
-                        data-target="#modules-links"
-                >
-                    <span class="fa fa-fw fa-archive"></span>
-                    <span class="link-name">Modules</span>
-                    <span class="fa fa-angle-down"></span>
-                </div>
-            </a>
-            <ul class="links collapse"
-                    id="modules-links"
->
-                    <li class="link">
-                        <a href="modules/OAuthModule.html" data-type="entity-link">OAuthModule</a>
-                    </li>
-            </ul>
-        </li>
-
-
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#classes-links"
->
-                <span class="fa fa-fw fa-file-code-o"></span>
-                <span>Classes</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="classes-links"
->
-                    <li class="link">
-                        <a href="classes/AbstractValidationHandler.html" data-type="entity-link">AbstractValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/AuthConfig.html" data-type="entity-link">AuthConfig</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/JwksValidationHandler.html" data-type="entity-link">JwksValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/LoginOptions.html" data-type="entity-link">LoginOptions</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/NullValidationHandler.html" data-type="entity-link">NullValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthErrorEvent.html" data-type="entity-link">OAuthErrorEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthEvent.html" data-type="entity-link">OAuthEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthInfoEvent.html" data-type="entity-link">OAuthInfoEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthModuleConfig.html" data-type="entity-link">OAuthModuleConfig</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthNoopResourceServerErrorHandler.html" data-type="entity-link">OAuthNoopResourceServerErrorHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthResourceServerConfig.html" data-type="entity-link">OAuthResourceServerConfig</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthResourceServerErrorHandler.html" data-type="entity-link">OAuthResourceServerErrorHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthStorage.html" data-type="entity-link">OAuthStorage</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/OAuthSuccessEvent.html" data-type="entity-link">OAuthSuccessEvent</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/ReceivedTokens.html" data-type="entity-link">ReceivedTokens</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/ValidationHandler.html" data-type="entity-link">ValidationHandler</a>
-                    </li>
-                    <li class="link">
-                        <a href="classes/WebHttpUrlEncodingCodec.html" data-type="entity-link">WebHttpUrlEncodingCodec</a>
-                    </li>
-            </ul>
-        </li>
-
-                <li class="chapter">
-                    <div class="simple menu-toggler" data-toggle="collapse"
-                            data-target="#injectables-links"
->
-                        <span class="fa fa-fw fa-long-arrow-down"></span>
-                        <span>Injectables</span>
-                        <span class="fa fa-angle-down"></span>
-                    </div>
-                    <ul class="links collapse"
-                            id="injectables-links"
->
-                            <li class="link">
-                                <a href="injectables/OAuthService.html" data-type="entity-link">OAuthService</a>
-                            </li>
-                            <li class="link">
-                                <a href="injectables/UrlHelperService.html" data-type="entity-link">UrlHelperService</a>
-                            </li>
-                    </ul>
-                </li>
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#interceptors-links"
->
-                <span class="fa fa-fw fa-exchange"></span>
-                <span>Interceptors</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="interceptors-links"
->
-                    <li class="link">
-                        <a href="interceptors/DefaultOAuthInterceptor.html" data-type="entity-link">DefaultOAuthInterceptor</a>
-                    </li>
-            </ul>
-        </li>
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#interfaces-links"
->
-                <span class="fa fa-fw fa-info"></span>
-                <span>Interfaces</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="interfaces-links"
->
-                    <li class="link">
-                        <a href="interfaces/OidcDiscoveryDoc.html" data-type="entity-link">OidcDiscoveryDoc</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/ParsedIdToken.html" data-type="entity-link">ParsedIdToken</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/TokenResponse.html" data-type="entity-link">TokenResponse</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/UserInfo.html" data-type="entity-link">UserInfo</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/ValidationParams.html" data-type="entity-link">ValidationParams</a>
-                    </li>
-            </ul>
-        </li>
-
-
-        <li class="chapter">
-            <div class="simple menu-toggler" data-toggle="collapse"
-                    data-target="#miscellaneous-links"
->
-                <span class="fa fa-fw fa-cubes"></span>
-                <span>Miscellaneous</span>
-                <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="links collapse"
-                    id="miscellaneous-links"
->
-                    <li class="link">
-                      <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
-                    </li>
-                    <li class="link">
-                      <a href="miscellaneous/typealiases.html" data-type="entity-link">Type aliases</a>
-                    </li>
-                    <li class="link">
-                      <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
-                    </li>
-            </ul>
-        </li>
-
-
-
-
-    </ul>
-
-</nav>
+                   <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
                <div class="content interface">
@@ -607,30 +98,40 @@
 
 
 
+
+
+
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li>OidcDiscoveryDoc</li>
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  OidcDiscoveryDoc</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li class="active">
-        <a href="#info" id="info-tab" role="tab" data-toggle="tab" data-link="info">Info</a>
-    </li>
-
-
-    <li>
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
-    </li>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
             <code>projects/lib/src/types.ts</code>
         </p>
+
 
             <p class="comment">
                 <h3>Description</h3>
@@ -641,7 +142,7 @@
             </p>
 
 
-        <section>
+        <section data-compodoc="block-index">
             <h3 id="index">Index</h3>
             <table class="table table-sm table-bordered index-table">
                 <tbody>
@@ -654,91 +155,184 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#acr_values_supported">acr_values_supported</a>
+                                        <a href="#acr_values_supported" 
+>
+                                            acr_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#authorization_endpoint">authorization_endpoint</a>
+                                        <a href="#authorization_endpoint" 
+>
+                                            authorization_endpoint
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#check_session_iframe">check_session_iframe</a>
+                                        <a href="#check_session_iframe" 
+>
+                                            check_session_iframe
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#claim_types_supported">claim_types_supported</a>
+                                        <a href="#claim_types_supported" 
+>
+                                            claim_types_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#claims_parameter_supported">claims_parameter_supported</a>
+                                        <a href="#claims_parameter_supported" 
+>
+                                            claims_parameter_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#claims_supported">claims_supported</a>
+                                        <a href="#claims_supported" 
+>
+                                            claims_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#display_values_supported">display_values_supported</a>
+                                        <a href="#display_values_supported" 
+>
+                                            display_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#end_session_endpoint">end_session_endpoint</a>
+                                        <a href="#end_session_endpoint" 
+>
+                                            end_session_endpoint
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#grant_types_supported">grant_types_supported</a>
+                                        <a href="#grant_types_supported" 
+>
+                                            grant_types_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#id_token_encryption_alg_values_supported">id_token_encryption_alg_values_supported</a>
+                                        <a href="#id_token_encryption_alg_values_supported" 
+>
+                                            id_token_encryption_alg_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#id_token_encryption_enc_values_supported">id_token_encryption_enc_values_supported</a>
+                                        <a href="#id_token_encryption_enc_values_supported" 
+>
+                                            id_token_encryption_enc_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#id_token_signing_alg_values_supported">id_token_signing_alg_values_supported</a>
+                                        <a href="#id_token_signing_alg_values_supported" 
+>
+                                            id_token_signing_alg_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#issuer">issuer</a>
+                                        <a href="#issuer" 
+>
+                                            issuer
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#jwks_uri">jwks_uri</a>
+                                        <a href="#jwks_uri" 
+>
+                                            jwks_uri
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#registration_endpoint">registration_endpoint</a>
+                                        <a href="#registration_endpoint" 
+>
+                                            registration_endpoint
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#request_object_signing_alg_values_supported">request_object_signing_alg_values_supported</a>
+                                        <a href="#request_object_signing_alg_values_supported" 
+>
+                                            request_object_signing_alg_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#response_modes_supported">response_modes_supported</a>
+                                        <a href="#response_modes_supported" 
+>
+                                            response_modes_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#response_types_supported">response_types_supported</a>
+                                        <a href="#response_types_supported" 
+>
+                                            response_types_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#scopes_supported">scopes_supported</a>
+                                        <a href="#revocation_endpoint" 
+>
+                                            revocation_endpoint
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#service_documentation">service_documentation</a>
+                                        <a href="#scopes_supported" 
+>
+                                            scopes_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#subject_types_supported">subject_types_supported</a>
+                                        <a href="#service_documentation" 
+>
+                                            service_documentation
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#token_endpoint">token_endpoint</a>
+                                        <a href="#subject_types_supported" 
+>
+                                            subject_types_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#token_endpoint_auth_methods_supported">token_endpoint_auth_methods_supported</a>
+                                        <a href="#token_endpoint" 
+>
+                                            token_endpoint
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#token_endpoint_auth_signing_alg_values_supported">token_endpoint_auth_signing_alg_values_supported</a>
+                                        <a href="#token_endpoint_auth_methods_supported" 
+>
+                                            token_endpoint_auth_methods_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#ui_locales_supported">ui_locales_supported</a>
+                                        <a href="#token_endpoint_auth_signing_alg_values_supported" 
+>
+                                            token_endpoint_auth_signing_alg_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#userinfo_encryption_alg_values_supported">userinfo_encryption_alg_values_supported</a>
+                                        <a href="#ui_locales_supported" 
+>
+                                            ui_locales_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#userinfo_encryption_enc_values_supported">userinfo_encryption_enc_values_supported</a>
+                                        <a href="#userinfo_encryption_alg_values_supported" 
+>
+                                            userinfo_encryption_alg_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#userinfo_endpoint">userinfo_endpoint</a>
+                                        <a href="#userinfo_encryption_enc_values_supported" 
+>
+                                            userinfo_encryption_enc_values_supported
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#userinfo_signing_alg_values_supported">userinfo_signing_alg_values_supported</a>
+                                        <a href="#userinfo_endpoint" 
+>
+                                            userinfo_endpoint
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#userinfo_signing_alg_values_supported" 
+>
+                                            userinfo_signing_alg_values_supported
+                                        </a>
                                 </li>
                             </ul>
                         </td>
@@ -749,14 +343,18 @@
 
 
 
-            <section>
+            <section data-compodoc="block-properties">
                 <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="acr_values_supported"></a>
-                                        <span class="name"><b>acr_values_supported</b><a href="#acr_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>acr_values_supported</b>
+                                            <a href="#acr_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -777,11 +375,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">projects/lib/src/types.ts:118</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -790,12 +383,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="authorization_endpoint"></a>
-                                        <span class="name"><b>authorization_endpoint</b><a href="#authorization_endpoint"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>authorization_endpoint</b>
+                                            <a href="#authorization_endpoint">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>authorization_endpoint:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>authorization_endpoint:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -803,7 +400,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -811,11 +408,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/lib/src/types.ts:107</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -824,12 +416,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="check_session_iframe"></a>
-                                        <span class="name"><b>check_session_iframe</b><a href="#check_session_iframe"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>check_session_iframe</b>
+                                            <a href="#check_session_iframe">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>check_session_iframe:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>check_session_iframe:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -837,7 +433,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -845,11 +441,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">projects/lib/src/types.ts:112</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -858,7 +449,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="claim_types_supported"></a>
-                                        <span class="name"><b>claim_types_supported</b><a href="#claim_types_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>claim_types_supported</b>
+                                            <a href="#claim_types_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -879,11 +474,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/lib/src/types.ts:130</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -892,12 +482,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="claims_parameter_supported"></a>
-                                        <span class="name"><b>claims_parameter_supported</b><a href="#claims_parameter_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>claims_parameter_supported</b>
+                                            <a href="#claims_parameter_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>claims_parameter_supported:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                        <code>claims_parameter_supported:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -905,7 +499,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                                         </td>
                                     </tr>
@@ -913,11 +507,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">projects/lib/src/types.ts:132</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -926,7 +515,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="claims_supported"></a>
-                                        <span class="name"><b>claims_supported</b><a href="#claims_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>claims_supported</b>
+                                            <a href="#claims_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -947,11 +540,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">projects/lib/src/types.ts:131</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -960,7 +548,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="display_values_supported"></a>
-                                        <span class="name"><b>display_values_supported</b><a href="#display_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>display_values_supported</b>
+                                            <a href="#display_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -981,11 +573,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">projects/lib/src/types.ts:129</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -994,12 +581,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="end_session_endpoint"></a>
-                                        <span class="name"><b>end_session_endpoint</b><a href="#end_session_endpoint"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>end_session_endpoint</b>
+                                            <a href="#end_session_endpoint">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>end_session_endpoint:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>end_session_endpoint:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -1007,7 +598,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -1015,11 +606,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">projects/lib/src/types.ts:113</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1028,7 +614,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="grant_types_supported"></a>
-                                        <span class="name"><b>grant_types_supported</b><a href="#grant_types_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>grant_types_supported</b>
+                                            <a href="#grant_types_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1049,11 +639,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">projects/lib/src/types.ts:120</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1062,7 +647,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="id_token_encryption_alg_values_supported"></a>
-                                        <span class="name"><b>id_token_encryption_alg_values_supported</b><a href="#id_token_encryption_alg_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>id_token_encryption_alg_values_supported</b>
+                                            <a href="#id_token_encryption_alg_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1083,11 +672,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/lib/src/types.ts:126</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1096,7 +680,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="id_token_encryption_enc_values_supported"></a>
-                                        <span class="name"><b>id_token_encryption_enc_values_supported</b><a href="#id_token_encryption_enc_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>id_token_encryption_enc_values_supported</b>
+                                            <a href="#id_token_encryption_enc_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1117,11 +705,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">projects/lib/src/types.ts:127</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1130,7 +713,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="id_token_signing_alg_values_supported"></a>
-                                        <span class="name"><b>id_token_signing_alg_values_supported</b><a href="#id_token_signing_alg_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>id_token_signing_alg_values_supported</b>
+                                            <a href="#id_token_signing_alg_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1151,11 +738,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">projects/lib/src/types.ts:125</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1164,12 +746,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="issuer"></a>
-                                        <span class="name"><b>issuer</b><a href="#issuer"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>issuer</b>
+                                            <a href="#issuer">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>issuer:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>issuer:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -1177,7 +763,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -1185,11 +771,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">projects/lib/src/types.ts:106</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1198,12 +779,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="jwks_uri"></a>
-                                        <span class="name"><b>jwks_uri</b><a href="#jwks_uri"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>jwks_uri</b>
+                                            <a href="#jwks_uri">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>jwks_uri:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>jwks_uri:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -1211,7 +796,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -1219,11 +804,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/lib/src/types.ts:114</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1232,12 +812,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="registration_endpoint"></a>
-                                        <span class="name"><b>registration_endpoint</b><a href="#registration_endpoint"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>registration_endpoint</b>
+                                            <a href="#registration_endpoint">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>registration_endpoint:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>registration_endpoint:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -1245,7 +829,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -1253,11 +837,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/lib/src/types.ts:115</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1266,7 +845,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="request_object_signing_alg_values_supported"></a>
-                                        <span class="name"><b>request_object_signing_alg_values_supported</b><a href="#request_object_signing_alg_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>request_object_signing_alg_values_supported</b>
+                                            <a href="#request_object_signing_alg_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1287,11 +870,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">projects/lib/src/types.ts:128</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1300,7 +878,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="response_modes_supported"></a>
-                                        <span class="name"><b>response_modes_supported</b><a href="#response_modes_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>response_modes_supported</b>
+                                            <a href="#response_modes_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1321,11 +903,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">projects/lib/src/types.ts:119</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1334,7 +911,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="response_types_supported"></a>
-                                        <span class="name"><b>response_types_supported</b><a href="#response_types_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>response_types_supported</b>
+                                            <a href="#response_types_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1355,11 +936,39 @@
 
 
 
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="revocation_endpoint"></a>
+                                        <span class="name "><b>revocation_endpoint</b>
+                                            <a href="#revocation_endpoint">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>revocation_endpoint:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">projects/lib/src/types.ts:117</a></div>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
                                         </td>
                                     </tr>
+
+
+
+
 
                         </tbody>
                     </table>
@@ -1368,7 +977,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="scopes_supported"></a>
-                                        <span class="name"><b>scopes_supported</b><a href="#scopes_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>scopes_supported</b>
+                                            <a href="#scopes_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1389,11 +1002,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">projects/lib/src/types.ts:116</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1402,12 +1010,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="service_documentation"></a>
-                                        <span class="name"><b>service_documentation</b><a href="#service_documentation"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>service_documentation</b>
+                                            <a href="#service_documentation">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>service_documentation:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>service_documentation:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -1415,7 +1027,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -1423,11 +1035,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/lib/src/types.ts:133</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1436,7 +1043,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="subject_types_supported"></a>
-                                        <span class="name"><b>subject_types_supported</b><a href="#subject_types_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>subject_types_supported</b>
+                                            <a href="#subject_types_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1457,11 +1068,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">projects/lib/src/types.ts:121</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1470,12 +1076,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="token_endpoint"></a>
-                                        <span class="name"><b>token_endpoint</b><a href="#token_endpoint"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>token_endpoint</b>
+                                            <a href="#token_endpoint">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>token_endpoint:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>token_endpoint:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -1483,7 +1093,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -1491,11 +1101,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">projects/lib/src/types.ts:108</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1504,7 +1109,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="token_endpoint_auth_methods_supported"></a>
-                                        <span class="name"><b>token_endpoint_auth_methods_supported</b><a href="#token_endpoint_auth_methods_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>token_endpoint_auth_methods_supported</b>
+                                            <a href="#token_endpoint_auth_methods_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1525,11 +1134,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">projects/lib/src/types.ts:109</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1538,7 +1142,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="token_endpoint_auth_signing_alg_values_supported"></a>
-                                        <span class="name"><b>token_endpoint_auth_signing_alg_values_supported</b><a href="#token_endpoint_auth_signing_alg_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>token_endpoint_auth_signing_alg_values_supported</b>
+                                            <a href="#token_endpoint_auth_signing_alg_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1559,11 +1167,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">projects/lib/src/types.ts:110</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1572,7 +1175,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="ui_locales_supported"></a>
-                                        <span class="name"><b>ui_locales_supported</b><a href="#ui_locales_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>ui_locales_supported</b>
+                                            <a href="#ui_locales_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1593,11 +1200,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">projects/lib/src/types.ts:134</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1606,7 +1208,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="userinfo_encryption_alg_values_supported"></a>
-                                        <span class="name"><b>userinfo_encryption_alg_values_supported</b><a href="#userinfo_encryption_alg_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>userinfo_encryption_alg_values_supported</b>
+                                            <a href="#userinfo_encryption_alg_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1627,11 +1233,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">projects/lib/src/types.ts:123</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1640,7 +1241,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="userinfo_encryption_enc_values_supported"></a>
-                                        <span class="name"><b>userinfo_encryption_enc_values_supported</b><a href="#userinfo_encryption_enc_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>userinfo_encryption_enc_values_supported</b>
+                                            <a href="#userinfo_encryption_enc_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1661,11 +1266,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/lib/src/types.ts:124</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1674,12 +1274,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="userinfo_endpoint"></a>
-                                        <span class="name"><b>userinfo_endpoint</b><a href="#userinfo_endpoint"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>userinfo_endpoint</b>
+                                            <a href="#userinfo_endpoint">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>userinfo_endpoint:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>userinfo_endpoint:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -1687,7 +1291,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -1695,11 +1299,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">projects/lib/src/types.ts:111</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1708,7 +1307,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="userinfo_signing_alg_values_supported"></a>
-                                        <span class="name"><b>userinfo_signing_alg_values_supported</b><a href="#userinfo_signing_alg_values_supported"><span class="fa fa-link"></span></a></span>
+                                        <span class="name "><b>userinfo_signing_alg_values_supported</b>
+                                            <a href="#userinfo_signing_alg_values_supported">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1729,11 +1332,6 @@
 
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">projects/lib/src/types.ts:122</a></div>
-                                        </td>
-                                    </tr>
 
                         </tbody>
                     </table>
@@ -1741,8 +1339,13 @@
     </div>
 
 
-    <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class LoginOptions {
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+
+/**
+ * Additional options that can be passed to tryLogin.
+ */
+export class LoginOptions {
   /**
    * Is called, after a token has been received and
    * successfully validated.
@@ -1753,6 +1356,7 @@
 
   /**
    * Hook, to validate the received tokens.
+   *
    * Deprecated:  Use property &#x60;&#x60;tokenValidationHandler&#x60;&#x60; on OAuthService instead.
    */
   validationHandler?: (receivedTokens: ReceivedTokens) &#x3D;&gt; Promise&lt;any&gt;;
@@ -1768,7 +1372,12 @@
   /**
    * A custom hash fragment to be used instead of the
    * actual one. This is used for silent refreshes, to
-   * pass the iframes hash fragment to this method.
+   * pass the iframes hash fragment to this method, and
+   * is also used by popup flows in the same manner.
+   * This can be used with code flow, where is must be set
+   * to a hash symbol followed by the querystring. The
+   * question mark is optional, but may be present following
+   * the hash symbol.
    */
   customHashFragment?: string;
 
@@ -1781,6 +1390,44 @@
    * OIDC.
    */
   disableOAuth2StateCheck?: boolean;
+
+  /**
+   * Set this to true to disable the nonce
+   * check which is used to avoid
+   * replay attacks.
+   * This flag should never be true in
+   * production environments.
+   */
+  disableNonceCheck? &#x3D; false;
+
+  /**
+   * Normally, you want to clear your hash fragment after
+   * the lib read the token(s) so that they are not displayed
+   * anymore in the url. If not, set this to true. For code flow
+   * this controls removing query string values.
+   */
+  preventClearHashAfterLogin? &#x3D; false;
+
+  /**
+   * Set this for code flow if you used a custom redirect Uri
+   * when retrieving the code. This is used internally for silent
+   * refresh and popup flows.
+   */
+  customRedirectUri?: string;
+}
+
+/**
+ * Defines the logging interface the OAuthService uses
+ * internally. Is compatible with the &#x60;console&#x60; object,
+ * but you can provide your own implementation as well
+ * through dependency injection.
+ */
+export abstract class OAuthLogger {
+  abstract debug(message?: any, ...optionalParams: any[]): void;
+  abstract info(message?: any, ...optionalParams: any[]): void;
+  abstract log(message?: any, ...optionalParams: any[]): void;
+  abstract warn(message?: any, ...optionalParams: any[]): void;
+  abstract error(message?: any, ...optionalParams: any[]): void;
 }
 
 /**
@@ -1793,6 +1440,23 @@ export abstract class OAuthStorage {
   abstract getItem(key: string): string | null;
   abstract removeItem(key: string): void;
   abstract setItem(key: string, data: string): void;
+}
+
+@Injectable()
+export class MemoryStorage implements OAuthStorage {
+  private data &#x3D; new Map&lt;string, string&gt;();
+
+  getItem(key: string): string {
+    return this.data.get(key);
+  }
+
+  removeItem(key: string): void {
+    this.data.delete(key);
+  }
+
+  setItem(key: string, data: string): void {
+    this.data.set(key, data);
+  }
 }
 
 /**
@@ -1824,6 +1488,7 @@ export interface ParsedIdToken {
  */
 export interface TokenResponse {
   access_token: string;
+  id_token: string;
   token_type: string;
   expires_in: number;
   refresh_token: string;
@@ -1873,10 +1538,14 @@ export interface OidcDiscoveryDoc {
   claims_parameter_supported: boolean;
   service_documentation: string;
   ui_locales_supported: string[];
+  revocation_endpoint: string;
 }
 </code></pre>
     </div>
 </div>
+
+
+
 
 
 
@@ -1896,6 +1565,28 @@ export interface OidcDiscoveryDoc {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'OidcDiscoveryDoc.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
        <script src="../js/libs/bootstrap-native.js"></script>
 
        <script src="../js/libs/es6-shim.min.js"></script>
@@ -1905,20 +1596,16 @@ export interface OidcDiscoveryDoc {
 
        <script src="../js/compodoc.js"></script>
 
-        <script>
-            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_URL = 'OidcDiscoveryDoc.html';
-        </script>
-
-       <script src="../js/search/search.js"></script>
-       <script src="../js/search/lunr.min.js"></script>
-       <script src="../js/search/search-lunr.js"></script>
-
        <script src="../js/tabs.js"></script>
        <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
        <script src="../js/libs/prism.js"></script>
        <script src="../js/sourceCode.js"></script>
-       <script src="../js/search/search_index.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
 
 
     </body>

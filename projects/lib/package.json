@@ -1,16 +1,16 @@
 {
-  "name": "angular-oauth2-oidc",
+  "name": "lacuna-oauth2-oidc",
   "license": "MIT",
   "author": {
-    "name": "Manfred Steyer"
+    "name": "André Pinto"
   },
-  "version": "5.0.2",
-  "repository": "manfredsteyer/angular-oauth2-oidc",
-  "dependencies": {
-    "jsrsasign": "^8.0.12"
-  },
+  "version": "6.0.0-rc.1",
+  "repository": "LacunaSoftware/angular-oauth2-oidc",
   "peerDependencies": {
-    "@angular/common": ">=6.0.0 < 8.0.0",
-    "@angular/core": ">=6.0.0 < 8.0.0"
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.5.2"
   }
 }

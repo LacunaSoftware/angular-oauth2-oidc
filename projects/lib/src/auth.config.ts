@@ -16,6 +16,12 @@ export class AuthConfig {
   public postLogoutRedirectUri? = '';
 
   /**
+   * Defines whether to use 'redirectUri' as a replacement
+   * of 'postLogoutRedirectUri' if the latter is not set.
+   */
+  public redirectUriAsPostLogoutRedirectUriFallback? = true;
+
+  /**
    * The auth server's endpoint that allows to log
    * the user in when using implicit flow.
    */
@@ -65,6 +71,16 @@ export class AuthConfig {
   public tokenEndpoint?: string = null;
 
   /**
+   * Url of the revocation endpoint as defined by OpenId Connect and OAuth 2.
+   */
+  public revocationEndpoint?: string = null;
+
+  /**
+   * Names of known parameters sent out in the TokenResponse. https://tools.ietf.org/html/rfc6749#section-5.1
+   */
+  public customTokenParameters?: string[] = [];
+
+  /**
    * Url of the userinfo endpoint as defined by OpenId Connect.
    */
   public userinfoEndpoint?: string = null;
@@ -77,7 +93,7 @@ export class AuthConfig {
    * the verbosity of the console needs to be explicitly set
    * to include Debug level messages.
    */
-   public showDebugInformation? = false;
+  public showDebugInformation? = false;
 
   /**
    * The redirect uri used when doing silent refresh.
@@ -95,7 +111,7 @@ export class AuthConfig {
   /**
    * Timeout for silent refresh.
    * @internal
-   * depreacted b/c of typo, see silentRefreshTimeout
+   * @deprecated use silentRefreshTimeout
    */
   public siletRefreshTimeout?: number = 1000 * 20;
 
@@ -112,7 +128,7 @@ export class AuthConfig {
    * it does not bring additional security and is therefore
    * as good as using no password.
    */
-  public dummyClientSecret?: string = null;
+  public dummyClientSecret?: string = '';
 
   /**
    * Defines whether https is required.
@@ -177,7 +193,7 @@ export class AuthConfig {
    * This property has been introduced to disable at_hash checks
    * and is indented for Identity Provider that does not deliver
    * an at_hash EVEN THOUGH its recommended by the OIDC specs.
-   * Of course, when disabling these checks the we are bypassing
+   * Of course, when disabling these checks then we are bypassing
    * a security check which means we are more vulnerable.
    */
   public disableAtHashCheck? = false;
@@ -187,6 +203,16 @@ export class AuthConfig {
    * Normally, it should be the same as before.
    */
   public skipSubjectCheck? = false;
+
+  /*
+   * Defines wether to check the expiration time and the issued at time of the id token.
+   */
+  public skipExpirationChecks? = false;
+
+  /*
+   * Defines the valid audiences that the id token can contain. If not specified, the clientId is used.
+   */
+  public validAudiences?: string[];
 
   public useIdTokenHintForSilentRefresh? = false;
 
@@ -212,9 +238,56 @@ export class AuthConfig {
   public nonceStateSeparator? = ';';
 
   /**
-   * Set this to true to use HTTP BASIC auth for password flow
+   * Set this to true to use HTTP BASIC auth for AJAX calls
    */
-  public useHttpBasicAuthForPasswordFlow? = false;
+  public useHttpBasicAuth? = false;
+
+  /**
+   * The window of time (in seconds) to allow the current time to deviate when validating id_token's iat and exp values.
+   */
+  public clockSkewInSec?: number;
+
+  /**
+   * Decreases the Expiration time of tokens by this number of seconds
+   */
+  public decreaseExpirationBySec? = 0;
+
+  /**
+   * The interceptors waits this time span if there is no token
+   */
+  public waitForTokenInMsec? = 0;
+
+  /**
+   * Set this to true if you want to use silent refresh together with
+   * code flow. As silent refresh is the only option for refreshing
+   * with implicit flow, you don't need to explicitly turn it on in
+   * this case.
+   */
+  public useSilentRefresh?;
+
+  /**
+   * Code Flow is by defauld used together with PKCI which is also higly recommented.
+   * You can disbale it here by setting this flag to true.
+   * https://tools.ietf.org/html/rfc7636#section-1.1
+   */
+  public disablePKCE? = false;
+
+  /**
+   * Set this to true to preserve the requested route including query parameters after code flow login.
+   * This setting enables deep linking for the code flow.
+   */
+  public preserveRequestedRoute? = false;
+
+  /**
+   * Allows to disable the timer for the id_token used
+   * for token refresh
+   */
+  public disableIdTokenTimer? = false;
+
+  /**
+   * Blocks other origins requesting a silent refresh
+   */
+  public checkOrigin? = false;
 
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
@@ -227,7 +300,7 @@ export class AuthConfig {
    * allowing a way for implementations to specify their own method of routing to new
    * urls.
    */
-  public openUri?: ((uri: string) => void) = uri => {
+  public openUri?: (uri: string) => void = (uri) => {
     location.href = uri;
-  }
+  };
 }

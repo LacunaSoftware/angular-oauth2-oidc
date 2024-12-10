@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BASE_URL } from '../../app.tokens';
 import { Observable } from 'rxjs';
 import { Flight } from '../../entities/flight';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { OAuthService } from 'lacuna-oauth2-oidc';
 
 @Injectable()
 export class FlightService {
@@ -23,10 +23,10 @@ export class FlightService {
     let params = new HttpParams().set('from', from).set('to', to);
 
     this.http.get<Flight[]>(url, { headers, params }).subscribe(
-      flights => {
+      (flights) => {
         this.flights = flights;
       },
-      err => {
+      (err) => {
         console.warn('status', err.status);
       }
     );
