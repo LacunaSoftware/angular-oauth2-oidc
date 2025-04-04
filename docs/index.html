@@ -13,7 +13,7 @@
     </head>
     <body>
           <script>
-               // Blocking script to avaoid flickering dark mode
+               // Blocking script to avoid flickering dark mode
                // Dark mode toggle button
                var useDark = window.matchMedia('(prefers-color-scheme: dark)');
                var darkModeState = useDark.matches;
@@ -60,20 +60,13 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
-        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -82,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -107,9 +100,10 @@
 </ul>
 <h2>Tested Environment</h2>
 <p>Successfully tested with <strong>Angular 4.3 to Angular 16</strong> and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack.</p>
-<p>At server side we&#39;ve used <strong>IdentityServer</strong> (.NET / .NET Core), Redhat&#39;s <strong>Keycloak</strong> (Java), and <strong>Auth0</strong> (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.</p>
+<p>On the server-side we&#39;ve used <strong>IdentityServer</strong> (.NET / .NET Core), Redhat&#39;s <strong>Keycloak</strong> (Java), and <strong>Auth0</strong> (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.</p>
 <p>For using this library with <strong>Azure Active Directory</strong> (<strong>Azure AD</strong>), we recommend an additional look to this <a href="https://dev.to/yuriburger/azure-active-directory-b2c-with-pkce-for-your-angular-app-1dcg">blog post</a> and the example linked at the end of this blog post.</p>
 <p>Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.</p>
+<p><strong>Angular 19</strong>: Use 19.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 18</strong>: Use 18.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 17</strong>: Use 17.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 16</strong>: Use 16.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
@@ -379,6 +373,19 @@ Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</stron
             var COMPODOC_CURRENT_PAGE_URL = 'index.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>

@@ -6,7 +6,11 @@ import {
   OAuthStorage,
   DateTimeProvider,
 } from 'lacuna-oauth2-oidc';
-import { HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { APP_ROUTES } from './app.routes';
