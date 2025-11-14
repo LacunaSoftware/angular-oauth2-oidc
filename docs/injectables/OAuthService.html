@@ -13,7 +13,7 @@
     </head>
     <body>
           <script>
-               // Blocking script to avaoid flickering dark mode
+               // Blocking script to avoid flickering dark mode
                // Dark mode toggle button
                var useDark = window.matchMedia('(prefers-color-scheme: dark)');
                var darkModeState = useDark.matches;
@@ -60,20 +60,13 @@
                     darkModeState = darkModeStateLocal === 'true';
                }
                toggleDarkMode(darkModeState);
-
-               if ($darkModeToggles.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
           </script>
 
-        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -82,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -1142,8 +1135,8 @@ password flow.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2483"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2483</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2481"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2481</a></div>
                         </td>
                     </tr>
 
@@ -1443,8 +1436,8 @@ to transmit the access_token to a service</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2679"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2679</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2677"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2677</a></div>
                         </td>
                     </tr>
 
@@ -1551,8 +1544,8 @@ to transmit the access_token to a service</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2689"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2689</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2687"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2687</a></div>
                         </td>
                     </tr>
 
@@ -1853,8 +1846,8 @@ to transmit the access_token to a service</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2748"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2748</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2746"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2746</a></div>
                         </td>
                     </tr>
 
@@ -2025,8 +2018,8 @@ to transmit the access_token to a service</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2637"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2637</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2635"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2635</a></div>
                         </td>
                     </tr>
 
@@ -2374,7 +2367,7 @@ access_token. After receiving the access_token, this method
 uses it to query the userinfo endpoint in order to get information
 about the user in question.</p>
 <p>When using this, make sure that the property oidc is set to false.
-Otherwise stricter validations take place that make this operation
+Otherwise, stricter validations take place that make this operation
 fail.</p>
 </div>
 
@@ -2479,8 +2472,8 @@ fail.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2386"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2386</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2384"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2384</a></div>
                         </td>
                     </tr>
 
@@ -2520,8 +2513,8 @@ fail.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2398"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2398</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2396"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2396</a></div>
                         </td>
                     </tr>
 
@@ -2562,8 +2555,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2405"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2405</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2403"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2403</a></div>
                         </td>
                     </tr>
 
@@ -2601,8 +2594,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2470"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2470</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2468"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2468</a></div>
                         </td>
                     </tr>
 
@@ -2672,8 +2665,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2361"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2361</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2359"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2359</a></div>
                         </td>
                     </tr>
 
@@ -2713,8 +2706,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2350"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2350</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2348"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2348</a></div>
                         </td>
                     </tr>
 
@@ -2754,8 +2747,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2372"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2372</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2370"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2370</a></div>
                         </td>
                     </tr>
 
@@ -2795,8 +2788,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2417"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2417</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2415"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2415</a></div>
                         </td>
                     </tr>
 
@@ -2837,8 +2830,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2409"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2409</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2407"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2407</a></div>
                         </td>
                     </tr>
 
@@ -2876,8 +2869,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2390"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2390</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2388"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2388</a></div>
                         </td>
                     </tr>
 
@@ -2915,8 +2908,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2142"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2142</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2140"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2140</a></div>
                         </td>
                     </tr>
 
@@ -2954,8 +2947,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2146"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2146</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2144"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2144</a></div>
                         </td>
                     </tr>
 
@@ -3152,8 +3145,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2428"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2428</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2426"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2426</a></div>
                         </td>
                     </tr>
 
@@ -3193,8 +3186,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2449"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2449</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2447"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2447</a></div>
                         </td>
                     </tr>
 
@@ -3234,8 +3227,8 @@ as milliseconds since 1970.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2715"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2715</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2713"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2713</a></div>
                         </td>
                     </tr>
 
@@ -3588,8 +3581,8 @@ and implicit flows.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2703"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2703</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2701"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2701</a></div>
                         </td>
                     </tr>
 
@@ -3799,7 +3792,7 @@ depending on your configuration.</p>
 properties of this service. The url of the discovery
 document is infered from the issuer&#39;s url according
 to the OpenId Connect spec. To use another url you
-can pass it to to optional parameter fullUrl.</p>
+can pass it to optional parameter fullUrl.</p>
 </div>
 
                             <div class="io-description">
@@ -4075,7 +4068,7 @@ the <code>tryLogin(...)</code> method.</p>
                 <td class="col-md-4">
                         <div class="io-description"><p>Loads the user profile by accessing the user info endpoint defined by OpenId Connect.</p>
 <p>When using this with OAuth2 password flow, make sure that the property oidc is set to false.
-Otherwise stricter validations take place that make this operation fail.</p>
+Otherwise, stricter validations take place that make this operation fail.</p>
 </div>
 
                         <div class="io-description">
@@ -4108,8 +4101,8 @@ Otherwise stricter validations take place that make this operation fail.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2494"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2494</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2492"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2492</a></div>
                         </td>
                     </tr>
 
@@ -4151,8 +4144,8 @@ redirected to it with optional state parameter.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2495"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2495</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2493"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2493</a></div>
                         </td>
                     </tr>
 
@@ -4220,8 +4213,8 @@ redirected to it with optional state parameter.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2496"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2496</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2494"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2494</a></div>
                         </td>
                     </tr>
 
@@ -4289,8 +4282,8 @@ redirected to it with optional state parameter.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2497"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2497</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2495"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2495</a></div>
                         </td>
                     </tr>
 
@@ -4370,8 +4363,8 @@ redirected to it with optional state parameter.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2498"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2498</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2496"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2496</a></div>
                         </td>
                     </tr>
 
@@ -4458,8 +4451,8 @@ redirected to it with optional state parameter.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2376"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2376</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2374"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2374</a></div>
                         </td>
                     </tr>
 
@@ -4908,8 +4901,8 @@ method silentRefresh.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2787"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2787</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2785"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2785</a></div>
                         </td>
                     </tr>
 
@@ -5046,7 +5039,7 @@ up any security credentials associated with the authorization</p>
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Will setup up silent refreshing for when the token is
+                        <div class="io-description"><p>Will set up up silent refreshing for when the token is
 about to expire. When the user is logged out via this.logOut method, the
 silent refreshing will pause and not refresh the tokens until the user is
 logged back in via receiving a new token.</p>
@@ -5099,7 +5092,7 @@ logged back in via receiving a new token.</p>
                                             </td>
 
                                             <td>
-                                                    <p>Setup automatic refresh of a specific token type</p>
+                                                    <p>Set up automatic refresh of a specific token type</p>
 
                                             </td>
                                         </tr>
@@ -5717,8 +5710,8 @@ To restart it, call setupAutomaticSilentRefresh again.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2128"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2128</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2126"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2126</a></div>
                         </td>
                     </tr>
 
@@ -5786,8 +5779,8 @@ To restart it, call setupAutomaticSilentRefresh again.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2138"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2138</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2136"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2136</a></div>
                         </td>
                     </tr>
 
@@ -5863,7 +5856,7 @@ To restart it, call setupAutomaticSilentRefresh again.</p>
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Delegates to tryLoginImplicitFlow for the sake of competability</p>
+                        <div class="io-description"><p>Delegates to tryLoginImplicitFlow for the sake of compatability</p>
 </div>
 
                             <div class="io-description">
@@ -6009,8 +6002,8 @@ To restart it, call setupAutomaticSilentRefresh again.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="1975"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:1975</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1973"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:1973</a></div>
                         </td>
                     </tr>
 
@@ -6161,8 +6154,8 @@ current client.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="2108"
-                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2108</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="2106"
+                                    class="link-to-prism">projects/lib/src/oauth-service.ts:2106</a></div>
                         </td>
                     </tr>
 
@@ -9513,12 +9506,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   /**
-   * Will setup up silent refreshing for when the token is
+   * Will set up up silent refreshing for when the token is
    * about to expire. When the user is logged out via this.logOut method, the
    * silent refreshing will pause and not refresh the tokens until the user is
    * logged back in via receiving a new token.
    * @param params Additional parameter to pass
-   * @param listenTo Setup automatic refresh of a specific token type
+   * @param listenTo Set up automatic refresh of a specific token type
    */
   public setupAutomaticSilentRefresh(
     params: object &#x3D; {},
@@ -9805,7 +9798,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * properties of this service. The url of the discovery
    * document is infered from the issuer&#x27;s url according
    * to the OpenId Connect spec. To use another url you
-   * can pass it to to optional parameter fullUrl.
+   * can pass it to optional parameter fullUrl.
    *
    * @param fullUrl
    */
@@ -9998,7 +9991,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * about the user in question.
    *
    * When using this, make sure that the property oidc is set to false.
-   * Otherwise stricter validations take place that make this operation
+   * Otherwise, stricter validations take place that make this operation
    * fail.
    *
    * @param userName
@@ -10019,7 +10012,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * Loads the user profile by accessing the user info endpoint defined by OpenId Connect.
    *
    * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
-   * Otherwise stricter validations take place that make this operation fail.
+   * Otherwise, stricter validations take place that make this operation fail.
    */
   public loadUserProfile(): Promise&lt;object&gt; {
     if (!this.hasValidAccessToken()) {
@@ -10532,7 +10525,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     height?: number;
     width?: number;
   }): string {
-    // Specify an static height and width and calculate centered position
+    // Specify a static height and width and calculate centered position
 
     const height &#x3D; options.height || 470;
     const width &#x3D; options.width || 500;
@@ -10992,7 +10985,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   /**
-   * Delegates to tryLoginImplicitFlow for the sake of competability
+   * Delegates to tryLoginImplicitFlow for the sake of compatability
    * @param options Optional options.
    */
   public tryLogin(options: LoginOptions &#x3D; null): Promise&lt;boolean&gt; {
@@ -11239,9 +11232,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           },
           (err) &#x3D;&gt; {
             console.error(&#x27;Error getting token&#x27;, err);
-            this.eventsSubject.next(
-              new OAuthErrorEvent(&#x27;token_refresh_error&#x27;, err)
-            );
+            this.eventsSubject.next(new OAuthErrorEvent(&#x27;token_error&#x27;, err));
             reject(err);
           }
         );
@@ -12230,6 +12221,19 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             var COMPODOC_CURRENT_PAGE_URL = 'OAuthService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
