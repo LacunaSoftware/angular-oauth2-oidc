@@ -4,7 +4,7 @@
   "author": {
     "name": "André Pinto"
   },
-  "version": "19.0.0",
+  "version": "20.0.0-alpha.1",
   "repository": "LacunaSoftware/angular-oauth2-oidc",
   "dependencies": {
     "jsrsasign": "^11.0.0",
