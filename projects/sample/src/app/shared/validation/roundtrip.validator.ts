@@ -1,10 +1,9 @@
 import { Directive } from '@angular/core';
 import {
-  UntypedFormGroup,
-  Validator,
   AbstractControl,
   NG_VALIDATORS,
-  FormGroupDirective,
+  UntypedFormGroup,
+  Validator,
 } from '@angular/forms';
 
 @Directive({
